@@ -364,8 +364,9 @@ Packery.prototype.itemDragEnd = function( elem ) {
   // save this var, as it could get reset in dragStart
   var onLayoutComplete = this._getDragEndLayoutComplete( elem, item );
 
+  item.on( 'layout', onLayoutComplete );
+
   if ( item.needsPositioning ) {
-    item.on( 'layout', onLayoutComplete );
     item.moveTo( item.placeRect.x, item.placeRect.y );
   } else if ( item ) {
     // item didn't need placement
@@ -411,6 +412,9 @@ Packery.prototype._getDragEndLayoutComplete = function( elem, item ) {
     if ( itemNeedsPositioning ) {
       _this.emitEvent( 'dragItemPositioned', [ _this, item ] );
     }
+
+    _this.emitEvent( 'dragItemEnd', [ _this, item ] );
+
     // listen once
     return true;
   };
